@@ -31,6 +31,10 @@ header {
   padding: 0 2rem;
 }
 
+h1 {
+  font-size: 1.5em;
+}
+
 .logo {
   display: block;
   margin: 0 auto 2rem;
@@ -69,8 +73,9 @@ nav a:first-of-type {
   }
 
   .wrapper {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   nav {
