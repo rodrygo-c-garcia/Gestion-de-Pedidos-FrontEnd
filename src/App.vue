@@ -19,8 +19,9 @@ import HelloWorld from "./components/HelloWorld.vue";
       </div>
     </div>
   </header>
-
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
@@ -86,6 +87,10 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+
+  main {
+    min-height: 60vh;
   }
 }
 </style>
