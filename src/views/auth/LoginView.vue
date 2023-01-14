@@ -9,7 +9,7 @@
       <label for="">Password</label>
       <input type="password" v-model="usuario.password" />
     </div>
-    <button>Ingresar</button>
+    <button v-on:click="login">Ingresar</button>
   </div>
   {{ usuario }}
 </template>
@@ -24,6 +24,13 @@ export default {
         password: "",
       },
     };
+  },
+
+  // conjunto de funciones
+  methods: {
+    login() {
+      console.log("ingresando");
+    },
   },
 };
 </script>
