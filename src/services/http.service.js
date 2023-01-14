@@ -13,7 +13,7 @@ export function http() {
   });
 }
 
-// Para imagenes
+// Para archivos
 export function httpFile() {
   // configuracion global de nuestra endpoint
   return axios.create({
