@@ -1,21 +1,21 @@
 import { http, httpFile } from "./http.service";
 
-const getCategorias = function () {
+export const getCategorias = function () {
   return http().get(`/categoria`);
 };
 
-const postCategoria = function (data) {
+export const postCategoria = function (data) {
   return http().post(`/categoria`, data);
 };
 
-const getCategoria = function (id) {
+export const getCategoria = function (id) {
   return http().get(`/categoria/${id}`);
 };
 
-const putCategoria = function (id, data) {
+export const putCategoria = function (id, data) {
   return http().put(`/categoria/${id}`, data);
 };
 
-const deleteCategoria = function (id) {
+export const deleteCategoria = function (id) {
   return http().delete(`/categoria/${id}`);
 };
