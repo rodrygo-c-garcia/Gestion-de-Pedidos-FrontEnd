@@ -38,7 +38,11 @@ export default {
       const { data } = await loginService.login(this.usuario);
       console.log(data);
       if (data.error) alert("Datos erroneos");
-      else alert("Ingresando...");
+      else {
+        // vamos a codificar con una cadena de caracteres en base64 y para eso utlizamos la funcion de btoa()
+        // para ocultarlo un poco
+        localStorage.setItem("token", btoa(data.access_token));
+      }
     },
   },
 };
