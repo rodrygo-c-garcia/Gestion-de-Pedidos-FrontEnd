@@ -3,12 +3,14 @@
   <div>
     <div>
       <label for="">Email</label>
+      <!--  con v-model capturamos los datos de los inputs -->
       <input type="email" v-model="usuario.email" />
     </div>
     <div>
       <label for="">Password</label>
       <input type="password" v-model="usuario.password" />
     </div>
+    <!-- v-on:click nos permite escuchar una funcion en este caso login -->
     <button v-on:click="login">Ingresar</button>
   </div>
 
@@ -17,6 +19,7 @@
 
 <script>
 import * as loginService from "@/services/login.service";
+
 export default {
   data() {
     return {
@@ -29,8 +32,13 @@ export default {
 
   // conjunto de funciones
   methods: {
-    login() {
-      loginService.login();
+    // realizamos la peticion a nuestra API
+    async login() {
+      // solo capturamos la data (erro, mensaje)
+      const { data } = await loginService.login(this.usuario);
+      console.log(data);
+      if (data.error) alert("Datos erroneos");
+      else alert("Ingresando...");
     },
   },
 };
