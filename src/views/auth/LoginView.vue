@@ -11,6 +11,7 @@
     </div>
     <button v-on:click="login">Ingresar</button>
   </div>
+
   {{ usuario }}
 </template>
 
@@ -29,7 +30,7 @@ export default {
   // conjunto de funciones
   methods: {
     login() {
-      console.log("ingresando");
+      loginService.login();
     },
   },
 };
@@ -37,3 +38,5 @@ export default {
 
 <style>
 </style>
+
+clase 16 minuto 29:41
