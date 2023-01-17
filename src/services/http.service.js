@@ -9,7 +9,6 @@ export function http() {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + this.accessToken,
     },
   });
 }
@@ -25,3 +24,6 @@ export function httpFile() {
     },
   });
 }
+
+
+// Clase 18

@@ -9,7 +9,7 @@ const router = createRouter({
       path: "/",
       component: AppLayout,
       children: [
-         {
+        {
           path: "/",
           component: HomeView,
         },
@@ -24,7 +24,7 @@ const router = createRouter({
         {
           path: "/login",
           name: "login",
-          component: () => import("../views/auth/LoginView.vue"),
+          component: () => import("../views/auth/Login.vue"),
         },
       ]
     }, 

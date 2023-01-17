@@ -10,7 +10,9 @@ defineProps({
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
+    <h3 class="green">Ariel Rodrigo</h3>
   </div>
+  
 </template>
 
 <style scoped>
