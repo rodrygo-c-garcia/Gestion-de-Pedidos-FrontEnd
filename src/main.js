@@ -1,3 +1,6 @@
+import "primevue/resources/primevue.min.css";
+import "";
+
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
