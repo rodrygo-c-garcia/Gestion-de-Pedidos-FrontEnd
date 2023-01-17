@@ -13,6 +13,7 @@
     <!-- v-on:click nos permite escuchar una funcion en este caso login -->
     <button v-on:click="login">Ingresar</button>
   </div>
+  
 
   {{ usuario }}
 </template>
