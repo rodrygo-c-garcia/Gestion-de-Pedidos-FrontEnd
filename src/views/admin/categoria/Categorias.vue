@@ -21,6 +21,9 @@
   </DataTable>
   <Dialog modal="Editar Categoria" v-model:visible="display">
     <Card>
+      <template #title>
+        Editar Categoria
+      </template>
       <template #content>
         <div class="field col-10">
           <span class="p-float-label">
