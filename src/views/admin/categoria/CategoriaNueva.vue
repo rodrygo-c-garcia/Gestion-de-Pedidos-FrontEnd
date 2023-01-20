@@ -1,4 +1,5 @@
 <template>
+  <Toast position="top-right" />
   <div>
     <Card>
       <template #title>
@@ -28,7 +29,6 @@
 
 <script>
 import * as apiCategoria from '@/services/categoria.service';
-
 export default {
   data() {
     return {
@@ -38,17 +38,19 @@ export default {
       }
     }
   },
-  mounted() {
-    this.guardarCategoria()
-  },
   methods: {
     async guardarCategoria() {
       try {
         await apiCategoria.postCategoria(this.categoria)
         this.$router.push({ name: 'Categorias' })
+        this.showInfo()
       } catch (e) {
-        this.$toast.add({ severity: 'error', summary: 'Error al guardar', detail: 'Order submitted', life: 3000 });
+        this.showInfo('error', 'Error al Guardar')
       }
+    },
+
+    showInfo(tipo, msg) {
+      this.$toast.add({ severity: `${tipo}`, summary: `${msg}`, detail: 'Order submitted', life: 3000 });
     }
   }
 }
