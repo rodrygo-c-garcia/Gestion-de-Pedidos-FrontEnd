@@ -15,10 +15,10 @@ export default {
   },
 
   mounted() {
-    this.listarCategoria()
+    this.listarCategorias()
   },
-  methods() {
-    async function listarCategoria() {
+  methods: {
+    async listarCategorias() {
       const { data } = await apiCategoria.getCategorias()
       this.categorias = data
     }
