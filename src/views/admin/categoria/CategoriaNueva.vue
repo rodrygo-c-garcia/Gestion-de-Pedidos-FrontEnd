@@ -42,8 +42,8 @@ export default {
     async guardarCategoria() {
       try {
         await apiCategoria.postCategoria(this.categoria)
+        this.showInfo('success', 'Se guardo la Categoria')
         this.$router.push({ name: 'Categorias' })
-        this.showInfo()
       } catch (e) {
         this.showInfo('error', 'Error al Guardar')
       }

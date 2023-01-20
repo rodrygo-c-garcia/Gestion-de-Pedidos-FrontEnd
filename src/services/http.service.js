@@ -9,6 +9,7 @@ export function http() {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      Authorization: "Bearer 21|2Payqfpo1DOovfdAo1deAnoA4CqkkHPTuMKO0HZS",
     },
   });
 }
