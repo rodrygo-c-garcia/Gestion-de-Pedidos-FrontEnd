@@ -1,9 +1,8 @@
 <template>
-  <h1>Estas en la lista de Categorias</h1>
+  <h1>Producto</h1>
 </template>
 
 <script>
-
 export default {
 
 }

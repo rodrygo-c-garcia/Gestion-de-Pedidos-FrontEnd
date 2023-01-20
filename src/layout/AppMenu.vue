@@ -27,7 +27,7 @@ const model = ref([
                     },
                 ],
             },
-            { label: "Producto", icon: "pi pi-fw pi-id-card", to: "/about" },
+            { label: "Producto", icon: "pi pi-fw pi-id-card", to: "/producto" },
 
         ],
     },
