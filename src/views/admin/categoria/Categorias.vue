@@ -3,6 +3,8 @@
   <h2>Lista de Categorias</h2>
   <h3> {{ categorias }}</h3>
 
+  <Button label="Categoria Nueva" icon="pi pi-check" />
+
   <DataTable :value="categorias" stripedRows responsiveLayout="scroll">
     <Column field="id" header="ID"></Column>
     <Column field="nombre" header="NOMBRE"></Column>
