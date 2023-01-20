@@ -18,12 +18,12 @@ const model = ref([
                     {
                         label: "Nueva Categoria",
                         icon: "pi pi-fw pi-times-circle",
-                        to: "/auth/error",
+                        to: "/categoria/nuevo",
                     },
                     {
                         label: "Lista de Categorias",
                         icon: "pi pi-fw pi-times-circle",
-                        to: "/auth/error",
+                        to: "/categorias",
                     },
                 ],
             },

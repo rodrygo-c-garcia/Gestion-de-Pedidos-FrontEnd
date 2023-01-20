@@ -27,9 +27,15 @@ const router = createRouter({
           component: () => import("../views/auth/Login.vue"),
         },
         {
-          path: "/categoria",
-          name: "categoria",
-          component: () => import("../views/auth/Login.vue"),
+          path: "/categorias",
+          name: "categorias",
+          component: () => import("../views/admin/categoria/Categorias.vue"),
+        },
+        {
+          path: "/categoria/nuevo",
+          name: "categoria_nueva",
+          component: () =>
+            import("../views/admin/categoria/CategoriaNueva.vue"),
         },
       ],
     },
