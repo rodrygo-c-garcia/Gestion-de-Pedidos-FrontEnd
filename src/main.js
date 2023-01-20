@@ -106,6 +106,7 @@ const app = createApp(App);
 app.use(PrimeVue);
 app.use(router);
 app.use(ToastService);
+app.use(ConfirmationService);
 
 app.component("Accordion", Accordion);
 app.component("AccordionTab", AccordionTab);

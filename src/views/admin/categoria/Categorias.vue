@@ -1,6 +1,8 @@
 <template>
   <h1>Estas en la lista de Categorias</h1>
   <h2>Lista de Categorias</h2>
+  <ConfirmDialog></ConfirmDialog>
+
   <Button label="Categoria Nueva" icon="pi pi-check" />
 
   <DataTable :value="categorias" stripedRows responsiveLayout="scroll">
@@ -11,9 +13,9 @@
     <Column :exportable="false" style="min-width:8rem">
       <template #body="slotProps">
         <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-          @click="editcategoria(slotProps.data)" />
+          @click="editDialogCategoria(slotProps.data)" />
         <Button icon="pi pi-trash" class="p-button-rounded p-button-warning"
-          @click="confirmDeleteProduct(slotProps.data)" />
+          @click="eliminarDialogCategoria(slotProps.data)" />
       </template>
     </Column>
   </DataTable>
@@ -61,15 +63,29 @@ export default {
       const { data } = await apiCategoria.getCategorias()
       this.categorias = data
     },
-    editcategoria(data) {
+    editDialogCategoria(data) {
       this.display = true
       this.categoria = data
     },
     async modificarCategoria() {
       await apiCategoria.putCategoria(this.categoria.id, this.categoria)
     },
-    eliminarCategoria(data) {
-      this.categoria = data
+    eliminarDialogCategoria(data) {
+      this.$confirm.require({
+        message: 'Are you sure you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.eliminarCategoria(data.id)
+        },
+        reject: () => {
+          //callback to execute when user rejects the action
+        },
+      });
+    },
+    async eliminarCategoria(id) {
+      await apiCategoria.deleteCategoria(id)
+      this.listarCategorias()
     }
   }
 }
