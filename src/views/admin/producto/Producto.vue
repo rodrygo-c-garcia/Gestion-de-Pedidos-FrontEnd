@@ -12,7 +12,7 @@
         <h5 class="mb-2 md:m-0 p-as-md-center">Administrar Productos</h5>
         <span class="p-input-icon-left">
           <i class="pi pi-search" />
-          <!-- <InputText v-model="filters['global'].value" placeholder="Search..." /> -->
+          <InputText v-model="filters['global'].value" placeholder="Search..." />
         </span>
       </div>
     </template>
@@ -22,13 +22,14 @@
     <Column field="nombre" header="Nombre" :sortable="true" style="min-width:16rem"></Column>
     <Column header="Image">
       <template #body="slotProps">
-        <img :src="`http://127.0.0.1:8000/${slotProps.data.image}`" :alt="slotProps.data.image" class="product-image" />
+        <img v-if="slotProps.data.image" :src="`http://127.0.0.1:8000/${slotProps.data.image}`"
+          :alt="slotProps.data.image" class="product-image" />
       </template>
     </Column>
     <Column field="precio" header="Precio" :sortable="true" style="min-width:8rem">
-      <!-- <template #body="slotProps">
+      <template #body="slotProps">
         {{ formatCurrency(slotProps.data.precio) }}
-      </template> -->
+      </template>
     </Column>
     <Column field="categoria_id" header="Categoria" :sortable="true" style="min-width:10rem"></Column>
     <!-- <Column field="rating" header="Reviews" :sortable="true" style="min-width:12rem">
@@ -57,6 +58,7 @@
 
 <script>
 import * as productService from '@/services/producto.service'
+import { FilterMatchMode } from 'primevue/api';
 
 export default {
   data() {
@@ -65,11 +67,26 @@ export default {
       producto: {}
     }
   },
+  created() {
+    this.initFilters();
+  },
   async mounted() {
     const { data } = await productService.getProductos();
     // data.data solo trae los datos y los datos de la paginacion
     this.productos = data.data
   },
+  methods: {
+    formatCurrency(value) {
+      if (value)
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+      return;
+    },
+    initFilters() {
+      this.filters = {
+        'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+      }
+    }
+  }
 }
 </script>
 
