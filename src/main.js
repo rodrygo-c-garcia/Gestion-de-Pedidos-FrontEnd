@@ -101,6 +101,8 @@ import TreeTable from "primevue/treetable";
 import TriStateCheckbox from "primevue/tristatecheckbox";
 import VirtualScroller from "primevue/virtualscroller";
 
+import Popper from "vue3-popper";
+
 const app = createApp(App);
 
 app.use(PrimeVue);
@@ -108,6 +110,7 @@ app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);
 
+app.component("Popper", Popper);
 app.component("Accordion", Accordion);
 app.component("AccordionTab", AccordionTab);
 app.component("AutoComplete", AutoComplete);

@@ -14,6 +14,7 @@
           <Button label="Export" icon="pi pi-upload" class="p-button-help" @click="exportCSV($event)" />
         </template>
       </Toolbar>
+
       <DataTable ref="dt" :value="productos" v-model:selection="selectedProducts" dataKey="id" :paginator="true"
         :rows="10" :filters="filters"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -67,83 +68,81 @@
         </Column>
       </DataTable>
     </div>
-  </div>
 
-  <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Editar Producto" :modal="true"
-    class="p-fluid">
-    <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="product.image"
-      class="product-image" v-if="producto.imagen" />
-    <div class="field">
-      <label for="name">Nombre</label>
-      <InputText id="name" v-model.trim="producto.nombre" required="true" autofocus
-        :class="{ 'p-invalid': submitted && !product.name }" />
-      <small class="p-error" v-if="submitted && !producto.nombre">El nombre es requerido.</small>
-    </div>
 
-    <div class="field">
-      <label for="description">Descripcion del Producto</label>
-      <Textarea id="description" v-model="producto.description" required="true" rows="3" cols="20" />
-    </div>
+    <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true"
+      class="p-fluid">
+      <img :src="`http://127.0.0.1:8000/${slotProps.data.image}`" :alt="producto.imagen" class="product-image"
+        v-if="producto.imagen" />
 
-    <div class="field">
-      <label for="inventoryStatus" class="mb-3">Inventory Status</label>
-      <Dropdown id="inventoryStatus" v-model="producto.inventoryStatus" :options="statuses" optionLabel="label"
-        placeholder="Select a Status">
-        <template #value="slotProps">
-          <div v-if="slotProps.value && slotProps.value.value">
-            <span :class="'product-badge status-' + slotProps.value.value">{{ slotProps.value.label }}</span>
+      <div class="field">
+        <label for="name">Name</label>
+        <InputText id="name" v-model.trim="producto.nombre" required="true" autofocus
+          :class="{ 'p-invalid': submitted && !producto.nombre }" />
+        <small class="p-error" v-if="submitted && !producto.nombre">Name is required.</small>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <Textarea id="description" v-model="producto.descripcion" required="true" rows="3" cols="20" />
+      </div>
+
+
+
+      <div class="field">
+        <label class="mb-3">Categoria</label>
+        <div class="formgrid grid">
+          <div class="field-radiobutton col-6" v-for="cat in categorias " :key="cat.id">
+            <RadioButton id="category1" name="category" value="{{ cat.id }}" v-model="producto.categoria_id" />
+            <label for="category1">{{ cat.nombre }}</label>
           </div>
-          <div v-else-if="slotProps.value && !slotProps.value.value">
-            <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{ slotProps.value }}</span>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-      </Dropdown>
-    </div>
+        </div>
+      </div>
 
-    <div class="field">
-      <label class="mb-3">Category</label>
       <div class="formgrid grid">
-        <div class="field-radiobutton col-6">
-          <RadioButton id="category1" name="category" value="Accessories" v-model="producto.category" />
-          <label for="category1">Accessories</label>
+        <div class="field col">
+          <label for="price">Precio</label>
+          <InputNumber id="price" v-model="producto.precio" mode="currency" currency="USD" locale="en-US" />
         </div>
-        <div class="field-radiobutton col-6">
-          <RadioButton id="category2" name="category" value="Clothing" v-model="producto.category" />
-          <label for="category2">Clothing</label>
-        </div>
-        <div class="field-radiobutton col-6">
-          <RadioButton id="category3" name="category" value="Electronics" v-model="producto.category" />
-          <label for="category3">Electronics</label>
-        </div>
-        <div class="field-radiobutton col-6">
-          <RadioButton id="category4" name="category" value="Fitness" v-model="producto.category" />
-          <label for="category4">Fitness</label>
+        <div class="field col">
+          <label for="quantity">Stock</label>
+          <InputNumber id="quantity" v-model="producto.stock" integeronly />
         </div>
       </div>
-    </div>
 
-    <div class="formgrid grid">
-      <div class="field col">
-        <label for="price">Price</label>
-        <InputNumber id="price" v-model="producto.price" mode="currency" currency="USD" locale="en-US" />
-      </div>
-      <div class="field col">
-        <label for="quantity">Quantity</label>
-        <InputNumber id="quantity" v-model="producto.quantity" integeronly />
-      </div>
-    </div>
-    <template #footer>
-      <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
-      <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
-    </template>
-  </Dialog>
+      <!-- <div class="field">
+        <label for="inventoryStatus" class="mb-3">Inventory Status</label>
+        <Dropdown id="inventoryStatus" v-model="producto.estado" :options="statuses" optionLabel="label"
+          placeholder="Select a Status">
+          <template #value="slotProps">
+            <div v-if="slotProps.value && slotProps.value.value">
+              <span :class="'product-badge status-' + slotProps.value.value">{{ slotProps.value.label }}</span>
+            </div>
+            <div v-else-if="slotProps.value && !slotProps.value.value">
+              <span :class="'product-badge status-' + slotProps.value.toLowerCase()">{{ slotProps.value }}</span>
+            </div>
+            <span v-else>
+              {{ slotProps.placeholder }}
+            </span>
+          </template>
+        </Dropdown>
+      </div> -->
+
+      <template #footer>
+        <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
+        <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
+      </template>
+    </Dialog>
+
+
+
+  </div>
 </template>
 
 <script>
 import * as productService from '@/services/producto.service'
+import * as apiCategoria from '@/services/categoria.service';
+
 import { FilterMatchMode } from 'primevue/api';
 
 export default {
@@ -154,21 +153,26 @@ export default {
       selectedProducts: null,
       filters: {},
       submitted: false,
+      productDialog: false,
       statuses: [
         { label: 'ACTIVO', value: 1 },
         { label: 'INACTIVO', value: 0 },
       ],
-      productDialog: false,
-
+      categorias: []
     }
   },
   created() {
     this.initFilters();
   },
+
   async mounted() {
     const { data } = await productService.getProductos();
     // data.data solo trae los datos y los datos de la paginacion
     this.productos = data.data
+
+    // categorias
+    const data_cat = await apiCategoria.getCategorias()
+    this.categorias = data_cat.data
   },
   methods: {
     formatCurrency(value) {
@@ -191,6 +195,28 @@ export default {
     hideDialog() {
       this.productDialog = false;
       this.submitted = false;
+    },
+    saveProduct() {
+      this.submitted = true;
+
+      if (this.producto.nombre.trim()) {
+        if (this.producto.id) {
+          this.producto.inventoryStatus = this.producto.inventoryStatus.value ? this.producto.inventoryStatus.value : this.producto.inventoryStatus;
+          this.productos[this.findIndexById(this.producto.id)] = this.producto;
+          this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+        }
+        else {
+          //this.producto.id = this.createId();
+          // this.producto.code = this.createId();
+          //this.producto.image = 'product-placeholder.svg';
+          this.producto.estado = this.producto.estado ? this.producto.estado.value : 0;
+          this.productos.push(this.producto);
+          this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        }
+
+        this.productDialog = false;
+        this.producto = {};
+      }
     },
   }
 }
