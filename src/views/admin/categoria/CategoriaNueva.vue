@@ -50,7 +50,7 @@ export default {
     },
 
     showInfo(tipo, msg) {
-      this.$toast.add({ severity: `${tipo}`, summary: `${msg}`, detail: 'Order submitted', life: 3000 });
+      this.$toast.add({ severity: `${tipo}`, summary: `${msg}`, detail: '', life: 3000 });
     }
   }
 }

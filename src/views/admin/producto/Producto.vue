@@ -1,4 +1,5 @@
 <template>
+  <Toast position="top-right" />
   <div>
     <div class="card">
       <Toolbar class="mb-4">
@@ -70,20 +71,20 @@
     </div>
 
 
-    <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true"
+    <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Añadir Nuevo Producto" :modal="true"
       class="p-fluid">
       <img :src="`http://127.0.0.1:8000/${slotProps.data.image}`" :alt="producto.imagen" class="product-image"
         v-if="producto.imagen" />
 
       <div class="field">
-        <label for="name">Name</label>
+        <label for="name">Nombre</label>
         <InputText id="name" v-model.trim="producto.nombre" required="true" autofocus
           :class="{ 'p-invalid': submitted && !producto.nombre }" />
         <small class="p-error" v-if="submitted && !producto.nombre">Name is required.</small>
       </div>
 
       <div class="field">
-        <label for="description">Description</label>
+        <label for="description">Descripcion</label>
         <Textarea id="description" v-model="producto.descripcion" required="true" rows="3" cols="20" />
       </div>
 
@@ -142,10 +143,9 @@
       </div> -->
 
       <template #footer>
-        <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
-        <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
+        <Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
+        <Button label="Guardar" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
       </template>
-      {{ producto }}
 
     </Dialog>
   </div>
@@ -208,7 +208,7 @@ export default {
       this.productDialog = false;
       this.submitted = false;
     },
-    saveProduct() {
+    async saveProduct() {
       this.submitted = true;
 
       if (this.producto.nombre.trim()) {
@@ -221,9 +221,10 @@ export default {
           //this.producto.id = this.createId();
           // this.producto.code = this.createId();
           //this.producto.image = 'product-placeholder.svg';
-          this.producto.estado = this.producto.estado ? this.producto.estado.value : 0;
+          // this.producto.estado = this.producto.estado.value;
+          await productService.postProducto(this.producto);
           this.productos.push(this.producto);
-          this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+          this.$toast.add({ severity: 'success', summary: 'Producto Creado', detail: 'Revise la lista', life: 3000 });
         }
 
         this.productDialog = false;
