@@ -87,17 +87,30 @@
         <Textarea id="description" v-model="producto.descripcion" required="true" rows="3" cols="20" />
       </div>
 
-
+      <div class="field">
+        <label class="mb-3">Estado</label>
+        <div class="formgrid grid">
+          <div class="field-radiobutton col-6">
+            <RadioButton id="estado1" name="estado" :value="1" v-model="producto.estado" />
+            <label for="estado1">Activo</label>
+          </div>
+          <div class="field-radiobutton col-6">
+            <RadioButton id="estado2" name="estado" :value="0" v-model="producto.estado" />
+            <label for="estado2">Inactivo</label>
+          </div>
+        </div>
+      </div>
 
       <div class="field">
         <label class="mb-3">Categoria</label>
         <div class="formgrid grid">
-          <div class="field-radiobutton col-6" v-for="cat in categorias " :key="cat.id">
-            <RadioButton id="category1" name="category" value="{{ cat.id }}" v-model="producto.categoria_id" />
+          <div class="field-radiobutton col-6" v-for="(cat, index) in categorias" :key="index">
+            <RadioButton id="category1" name="category" :value="cat.id" v-model="producto.categoria_id" />
             <label for="category1">{{ cat.nombre }}</label>
           </div>
         </div>
       </div>
+
 
       <div class="formgrid grid">
         <div class="field col">
@@ -132,10 +145,9 @@
         <Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
         <Button label="Save" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
       </template>
+      {{ producto }}
+
     </Dialog>
-
-
-
   </div>
 </template>
 
