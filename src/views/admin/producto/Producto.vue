@@ -199,6 +199,8 @@ export default {
       this.productos = data.data
       // capturamos el total de dataos retornados por laravel
       this.totalRecords = data.total
+      console.log(data.total)
+      console.log(this.productos)
       this.loading = false;
     },
     onPage(event) {
