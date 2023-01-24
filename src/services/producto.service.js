@@ -1,7 +1,7 @@
 import { http, httpFile } from "./http.service";
 
-export const getProductos = function (page) {
-  return http().get(`/producto?page=${page}`);
+export const getProductos = function (page, limit) {
+  return http().get(`/producto?page=${page}&limit=${limit}`);
 };
 
 export const postProducto = function (data) {

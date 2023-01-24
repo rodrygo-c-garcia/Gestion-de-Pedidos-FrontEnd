@@ -173,6 +173,7 @@ export default {
       categorias: [],
       loading: false,
       totalRecords: 0,
+      // es el proxy
       lazyParams: {},
     }
   },
@@ -184,6 +185,8 @@ export default {
     // categorias
     const data_cat = await apiCategoria.getCategorias()
     this.categorias = data_cat.data
+    this.lazyParams.page = 0
+    this.lazyParams.rows = 5
     this.loadLazyData()
   },
 
@@ -192,10 +195,10 @@ export default {
       this.loading = true;
       console.log(this.lazyParams)
       // con lazyParams indicamos la pagina que queremos
-      this.listarProductos(this.lazyParams.page + 1)
+      this.listarProductos(this.lazyParams.page + 1, this.lazyParams.rows)
     },
-    async listarProductos(page) {
-      const { data } = await productService.getProductos(page);
+    async listarProductos(page, limit) {
+      const { data } = await productService.getProductos(page, limit);
       // data.data solo trae los datos y los datos de la paginacion
       this.productos = data.data
       // capturamos el total de dataos retornados por laravel
