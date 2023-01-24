@@ -191,10 +191,11 @@ export default {
     loadLazyData() {
       this.loading = true;
       console.log(this.lazyParams)
-      this.listarProductos()
+      // con lazyParams indicamos la pagina que queremos
+      this.listarProductos(this.lazyParams.page + 1)
     },
-    async listarProductos() {
-      const { data } = await productService.getProductos();
+    async listarProductos(page) {
+      const { data } = await productService.getProductos(page);
       // data.data solo trae los datos y los datos de la paginacion
       this.productos = data.data
       // capturamos el total de dataos retornados por laravel
