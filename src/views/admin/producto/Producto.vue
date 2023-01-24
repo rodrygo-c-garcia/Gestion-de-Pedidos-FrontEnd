@@ -191,9 +191,16 @@ export default {
     loadLazyData() {
       this.loading = true;
 
-      //this.listarProductos()
+      this.listarProductos()
     },
-
+    async listarProductos() {
+      const { data } = await productService.getProductos();
+      // data.data solo trae los datos y los datos de la paginacion
+      this.productos = data.data
+      // capturamos el total de dataos retornados por laravel
+      this.totalRecords = data.total
+      this.loadLazyData()
+    },
     formatCurrency(value) {
       if (value)
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
