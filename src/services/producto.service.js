@@ -5,6 +5,8 @@ export const getProductos = function (page, limit) {
 };
 
 export const postProducto = function (data) {
+  let formData = new FormData();
+
   return http().post(`/producto`, data);
 };
 

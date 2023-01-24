@@ -86,7 +86,25 @@
 
       <div class="field">
         <label for="description">Descripcion</label>
-        <Textarea id="description" v-model="producto.descripcion" required="true" rows="3" cols="20" />
+        <Textarea id="description" v-model="producto.descripcion" required="true" rows="2" cols="20" />
+      </div>
+
+      <div class="field">
+        <label for="img">Imagen</label>
+        <!-- <FileUpload name="demo[]" @change="onImgSelected" url="https://www.primefaces.org/upload.php"
+          @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="100000000"
+          v-model="producto.imagen">
+          <template #content>
+            <ul v-if="uploadedFiles && uploadedFiles[0]">
+              <li v-for="file of uploadedFiles[0]" :key="file">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+          </template>
+          <template #empty>
+            <p>Arrastrar y soltar archivos aquí para subir.</p>
+          </template>
+        </FileUpload> -->
+        <input type="file" @change="onImgSelected" />
+
       </div>
 
       <div class="field">
@@ -176,7 +194,8 @@ export default {
       totalRecords: 0,
       // es el proxy
       lazyParams: {},
-
+      // para la imagen
+      img_selected: null,
     }
   },
   created() {
@@ -257,6 +276,11 @@ export default {
         this.producto = {};
       }
     },
+    onImgSelected(event) {
+      console.log(event.target.files)
+      this.producto.imagen = event.target.files[0]
+    }
+
   }
 }
 </script>
