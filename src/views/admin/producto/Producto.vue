@@ -36,8 +36,9 @@
         <Column field="nombre" header="Nombre" :sortable="true" style="min-width:16rem"></Column>
         <Column header="Image">
           <template #body="slotProps">
-            <img v-if="slotProps.data.imagen" :src="`http://127.0.0.1:8000/${slotProps.data.image}`"
-              :alt="slotProps.data.imagen" class="product-image" />
+            <img v-if="slotProps.data.imagen && slotProps.data.imagen !== '/imagenes'"
+              :src="`http://127.0.0.1:8000/${slotProps.data.image}`" :alt="slotProps.data.imagen"
+              class="product-image" />
           </template>
         </Column>
         <Column field="precio" header="Precio" :sortable="true" style="min-width:8rem">
@@ -45,7 +46,7 @@
             {{ formatCurrency(slotProps.data.precio) }}
           </template>
         </Column>
-        <Column field="categoria_id" header="Categoria" :sortable="true" style="min-width:10rem"></Column>
+        <Column field="categoria.nombre" header="Categoria" :sortable="true" style="min-width:10rem"></Column>
         <!-- <Column field="rating" header="Reviews" :sortable="true" style="min-width:12rem">
       <template #body="slotProps">
         <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false" />
@@ -175,6 +176,7 @@ export default {
       totalRecords: 0,
       // es el proxy
       lazyParams: {},
+
     }
   },
   created() {
@@ -247,7 +249,6 @@ export default {
           //this.producto.image = 'product-placeholder.svg';
           // this.producto.estado = this.producto.estado.value;
           await productService.postProducto(this.producto);
-          //await productService.getProductos()
           this.productos.push(this.producto);
           this.$toast.add({ severity: 'success', summary: 'Producto Creado', detail: 'Revise la lista', life: 3000 });
         }
