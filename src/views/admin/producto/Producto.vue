@@ -201,6 +201,10 @@ export default {
       this.totalRecords = data.total
       this.loading = false;
     },
+    onPage(event) {
+      this.lazyParams = event;
+      this.loadLazyData();
+    },
     formatCurrency(value) {
       if (value)
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
