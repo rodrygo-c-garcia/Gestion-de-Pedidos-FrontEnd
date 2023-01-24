@@ -16,8 +16,8 @@
         </template>
       </Toolbar>
 
-      <DataTable ref="dt" :value="productos" v-model:selection="selectedProducts" dataKey="id" :paginator="true"
-        :rows="10" :filters="filters"
+      <DataTable ref="dt" :value="productos" :lazy="true" v-model:selection="selectedProducts" dataKey="id"
+        :paginator="true" :rows="10" :filters="filters"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rowsPerPageOptions="[5, 10, 25]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
@@ -32,7 +32,7 @@
         </template>
 
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
-        <Column field="id" header="ID" :sortable="true" style="min-width:12rem"></Column>
+        <Column field="id" header="#" :sortable="true" style="min-width:12rem"></Column>
         <Column field="nombre" header="Nombre" :sortable="true" style="min-width:16rem"></Column>
         <Column header="Image">
           <template #body="slotProps">
@@ -146,7 +146,7 @@
         <Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
         <Button label="Guardar" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
       </template>
-
+      {{ producto }}
     </Dialog>
   </div>
 </template>
@@ -170,7 +170,10 @@ export default {
         { label: 'ACTIVO', value: 1 },
         { label: 'INACTIVO', value: 0 },
       ],
-      categorias: []
+      categorias: [],
+      loading: false,
+      totalRecords: 0,
+      lazyParams: {},
     }
   },
   created() {
@@ -178,15 +181,19 @@ export default {
   },
 
   async mounted() {
-    const { data } = await productService.getProductos();
-    // data.data solo trae los datos y los datos de la paginacion
-    this.productos = data.data
-
     // categorias
     const data_cat = await apiCategoria.getCategorias()
     this.categorias = data_cat.data
+    this.loadLazyData()
   },
+
   methods: {
+    loadLazyData() {
+      this.loading = true;
+
+      //this.listarProductos()
+    },
+
     formatCurrency(value) {
       if (value)
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -223,6 +230,7 @@ export default {
           //this.producto.image = 'product-placeholder.svg';
           // this.producto.estado = this.producto.estado.value;
           await productService.postProducto(this.producto);
+          //await productService.getProductos()
           this.productos.push(this.producto);
           this.$toast.add({ severity: 'success', summary: 'Producto Creado', detail: 'Revise la lista', life: 3000 });
         }
