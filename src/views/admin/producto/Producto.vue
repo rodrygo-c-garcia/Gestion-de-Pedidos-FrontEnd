@@ -16,8 +16,8 @@
         </template>
       </Toolbar>
 
-      <DataTable ref="dt" :value="productos" :lazy="true" v-model:selection="selectedProducts" dataKey="id"
-        :paginator="true" :rows="10" :filters="filters"
+      <DataTable ref="dt" :totalRecords="totalRecords" :loading="loading" @page="onPage($event)" :value="productos"
+        :lazy="true" v-model:selection="selectedProducts" dataKey="id" :paginator="true" :rows="5" :filters="filters"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rowsPerPageOptions="[5, 10, 25]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" responsiveLayout="scroll">
@@ -190,7 +190,7 @@ export default {
   methods: {
     loadLazyData() {
       this.loading = true;
-
+      console.log(this.lazyParams)
       this.listarProductos()
     },
     async listarProductos() {
@@ -199,7 +199,7 @@ export default {
       this.productos = data.data
       // capturamos el total de dataos retornados por laravel
       this.totalRecords = data.total
-      this.loadLazyData()
+      this.loading = false;
     },
     formatCurrency(value) {
       if (value)
