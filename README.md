@@ -1,6 +1,6 @@
 # vue-frontend-pedidos
 
-Rodrigo Colque Garcia
+Ariel Rodrigo Colque Garcia
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -12,6 +12,7 @@ This template should help get you started developing with Vue 3 in Vite.
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
+# Pasos para configurar el proyecto
 ## Project Setup
 
 ```sh
