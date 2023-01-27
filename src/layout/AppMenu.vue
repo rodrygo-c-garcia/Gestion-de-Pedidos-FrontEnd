@@ -35,7 +35,7 @@ const model = ref([
         label: "Gestion de Pedidos",
         items: [
             {
-                label: "Pedidos",
+                label: "Lista de Pedidos",
                 icon: "pi pi-fw pi-eye",
                 to: "/pedido",
                 badge: "NEW",
@@ -45,12 +45,6 @@ const model = ref([
                 icon: "pi pi-fw pi-eye",
                 to: "/pedido/nuevo",
                 badge: "NEW",
-            },
-            {
-                label: "Lista de Pedidos",
-                icon: "pi pi-fw pi-globe",
-                url: "https://www.primefaces.org/primeblocks-vue",
-                target: "_blank",
             },
             {
                 label: "Clientes",
