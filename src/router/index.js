@@ -11,7 +11,6 @@ const router = createRouter({
       path: "/",
       component: AppLayout,
       // añadimos requireAuth al padre ruta por lo que sus hijos tendran las misma caracteristica
-      meta: { requireAuth: true },
 
       // rutas hijas
       children: [
@@ -31,27 +30,32 @@ const router = createRouter({
           path: "/categorias",
           name: "categorias",
           component: () => import("../views/admin/categoria/Categorias.vue"),
+          meta: { requireAuth: true },
         },
         {
           path: "/categoria/nuevo",
           name: "categoria_nueva",
           component: () =>
             import("../views/admin/categoria/CategoriaNueva.vue"),
+          meta: { requireAuth: true },
         },
         {
           path: "/producto",
           name: "producto",
           component: () => import("../views/admin/producto/Producto.vue"),
+          meta: { requireAuth: true },
         },
         {
           path: "/pedido",
           name: "pedido",
           component: () => import("../views/admin/pedido/Pedido.vue"),
+          meta: { requireAuth: true },
         },
         {
           path: "/pedido/nuevo",
           name: "pedido_nuevo",
           component: () => import("../views/admin/pedido/NuevoPedido.vue"),
+          meta: { requireAuth: true },
         },
       ],
     },
@@ -77,7 +81,6 @@ router.beforeEach((to, from, next) => {
     try {
       let tonken64 = localStorage.getItem("token");
       let token = Buffer.from(tonken64, "base64").toString("ascii");
-      console.log("TOKEN" + token);
       // si existe el token dejamos pasar, si no existe mandamos al Login
       token ? next() : next({ name: "login" });
     } catch (e) {
