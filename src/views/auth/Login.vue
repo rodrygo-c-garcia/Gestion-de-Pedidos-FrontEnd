@@ -42,7 +42,7 @@ export default {
         //localStorage.setItem("token", btoa(data.access_token));
         let base64 = Buffer.from(data.access_token).toString('base64');
         localStorage.setItem("token", base64);
-        this.$router.push({ name: '/' })
+        this.$router.push({ path: '/' })
       }
     },
   },
