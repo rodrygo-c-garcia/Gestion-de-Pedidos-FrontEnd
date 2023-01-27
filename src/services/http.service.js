@@ -5,8 +5,11 @@ import router from "@/router";
 
 // formamos el axios para que se conecte a la API
 export function http() {
-  let tonken64 = localStorage.getItem("token");
-  let token = Buffer.from(tonken64, "base64").toString("ascii");
+  let token = "";
+  try {
+    let tonken64 = localStorage.getItem("token");
+    let token = Buffer.from(tonken64, "base64").toString("ascii");
+  } catch (e) {}
 
   // configuracion global de nuestra endpoint
   const interceptor = axios.create({
@@ -24,12 +27,10 @@ export function http() {
       return response;
     },
     (error) => {
-      if (error.response.status === 401) {
-        //limipiamos el localStorage
-        localStorage.clear();
-        // redireccionamos al login cuando hay un error
-        router.push("/login");
-      }
+      //limipiamos el localStorage
+      localStorage.clear();
+      // redireccionamos al login cuando hay un error
+      //router.push("/login");
       return Promise.reject(error);
     }
   );
