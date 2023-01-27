@@ -4,7 +4,7 @@ import axios from "axios";
 // formamos el axios para que se conecte a la API
 export function http() {
   // configuracion global de nuestra endpoint
-  return axios.create({
+  const interceptor = axios.create({
     baseURL: "http://127.0.0.1:8000/api",
     headers: {
       "Content-Type": "application/json",
