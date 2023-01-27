@@ -206,9 +206,13 @@ export default {
   },
 
   async mounted() {
-    // categorias
-    const data_cat = await apiCategoria.getCategorias()
-    this.categorias = data_cat.data
+    // atrapamos los errores que puede haver en la peticion de categorias
+    try {
+      const data_cat = await apiCategoria.getCategorias()
+      this.categorias = data_cat.data
+    } catch (e) {
+      console.log(e)
+    }
     this.lazyParams.page = 0
     this.lazyParams.rows = 5
     this.loadLazyData()
