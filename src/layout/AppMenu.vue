@@ -43,7 +43,7 @@ const model = ref([
             {
                 label: "Nuevos Pedidos",
                 icon: "pi pi-fw pi-eye",
-                to: "/blocks",
+                to: "/pedido/nuevo",
                 badge: "NEW",
             },
             {

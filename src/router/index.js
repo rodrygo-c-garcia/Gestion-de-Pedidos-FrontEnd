@@ -47,6 +47,11 @@ const router = createRouter({
           name: "pedido",
           component: () => import("../views/admin/pedido/Pedido.vue"),
         },
+        {
+          path: "/pedido/nuevo",
+          name: "pedido_nuevo",
+          component: () => import("../views/admin/pedido/NuevoPedido.vue"),
+        },
       ],
     },
   ],
