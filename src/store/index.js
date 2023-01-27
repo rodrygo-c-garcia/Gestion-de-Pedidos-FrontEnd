@@ -1,7 +1,10 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {},
+  // los estados son los datos globales
+  state: {
+    mensaje: "Hello from Vuex",
+  },
   mutations: {},
   actions: {},
   modules: {},
