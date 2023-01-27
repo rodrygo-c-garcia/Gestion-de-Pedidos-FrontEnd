@@ -68,8 +68,8 @@ const router = createRouter({
 // beforeEach antes de entrar a la ruta
 // a, donde, siguiente
 router.beforeEach((to, from, next) => {
-  console.log("FROM", from);
-  console.log("TO", to);
+  // console.log("FROM", from);
+  // console.log("TO", to);
 
   // si mi ruta esta protegido
   if (to.meta.requireAuth) {

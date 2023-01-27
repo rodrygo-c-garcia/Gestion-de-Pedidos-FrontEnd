@@ -1,6 +1,7 @@
 // Para configurar nuestras peticiones globalmente
 import axios from "axios";
-import { url_base } from "@/config/index.html";
+import { url_base } from "@/config/index.js";
+import router from "@/router";
 
 // formamos el axios para que se conecte a la API
 export function http() {
@@ -17,7 +18,21 @@ export function http() {
     },
   });
 
-  // verificar errores ()
+  // verificar errores antes de realizar cualquier otra peticion
+  interceptor.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        //limipiamos el localStorage
+        localStorage.clear();
+        // redireccionamos al login cuando hay un error
+        router.push("/login");
+      }
+      return Promise.reject(error);
+    }
+  );
   return interceptor;
 }
 

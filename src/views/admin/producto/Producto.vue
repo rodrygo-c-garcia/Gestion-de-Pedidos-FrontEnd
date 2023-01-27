@@ -211,7 +211,8 @@ export default {
       const data_cat = await apiCategoria.getCategorias()
       this.categorias = data_cat.data
     } catch (e) {
-      console.log(e)
+      console.log(e.response.status)
+      if (e.response.status == 401) this.$router.push({ name: 'login' })
     }
     this.lazyParams.page = 0
     this.lazyParams.rows = 5
