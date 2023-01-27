@@ -16,7 +16,7 @@ const logoUrl = computed(() => {
 
 <script>
 import * as loginService from "@/services/login.service";
-import CryptoJS from 'crypto-js';
+import { Buffer } from 'buffer';
 
 export default {
   data() {
