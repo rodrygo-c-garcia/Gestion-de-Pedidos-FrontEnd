@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import PrimeVue from "primevue/config";
+import store from "./store/index.js";
 
 import "@/assets/styles.scss";
 import AutoComplete from "primevue/autocomplete";
@@ -109,6 +110,7 @@ app.use(PrimeVue);
 app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);
+app.use(store);
 
 app.component("Popper", Popper);
 app.component("Accordion", Accordion);
