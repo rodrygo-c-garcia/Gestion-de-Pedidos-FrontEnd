@@ -35,6 +35,12 @@ const model = ref([
         label: "Gestion de Pedidos",
         items: [
             {
+                label: "Pedidos",
+                icon: "pi pi-fw pi-eye",
+                to: "/pedido",
+                badge: "NEW",
+            },
+            {
                 label: "Nuevos Pedidos",
                 icon: "pi pi-fw pi-eye",
                 to: "/blocks",

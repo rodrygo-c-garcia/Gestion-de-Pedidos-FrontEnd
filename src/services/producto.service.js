@@ -4,10 +4,19 @@ export const getProductos = function (page, limit) {
   return http().get(`/producto?page=${page}&limit=${limit}`);
 };
 
-export const postProducto = function (data) {
+export const postProducto = function (producto) {
   let formData = new FormData();
 
-  return http().post(`/producto`, data);
+  formData.append("nombre", producto.nombre);
+  formData.append("precio", producto.precio);
+  formData.append("stock", producto.stock);
+  formData.append("descripcion", producto.descripcion);
+  formData.append("categoria_id", producto.categoria_id);
+  formData.append("estado", producto.estado);
+  // preguntamos si producto imagen existe
+  if (producto.imagen) formData.append("imagen", producto.imagen);
+
+  return http().post(`/producto`, formData);
 };
 
 export const getProducto = function (id) {

@@ -34,10 +34,10 @@
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
         <Column field="id" header="#" :sortable="true" style="min-width:12rem"></Column>
         <Column field="nombre" header="Nombre" :sortable="true" style="min-width:16rem"></Column>
-        <Column header="Image">
+        <Column header="Imagen">
           <template #body="slotProps">
             <img v-if="slotProps.data.imagen && slotProps.data.imagen !== '/imagenes'"
-              :src="`http://127.0.0.1:8000/${slotProps.data.image}`" :alt="slotProps.data.imagen"
+              :src="`http://127.0.0.1:8000${slotProps.data.imagen}`" :alt="slotProps.data.imagen"
               class="product-image" />
           </template>
         </Column>
@@ -74,19 +74,14 @@
 
     <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Añadir Nuevo Producto" :modal="true"
       class="p-fluid">
-      <img :src="`http://127.0.0.1:8000/${slotProps.data.image}`" :alt="producto.imagen" class="product-image"
-        v-if="producto.imagen" />
+      <!-- <img :src="`http://127.0.0.1:8000/${producto.imagen}`" :alt="producto.imagen" class="product-image"
+        v-if="producto.imagen" /> -->
 
       <div class="field">
         <label for="name">Nombre</label>
         <InputText id="name" v-model.trim="producto.nombre" required="true" autofocus
           :class="{ 'p-invalid': submitted && !producto.nombre }" />
         <small class="p-error" v-if="submitted && !producto.nombre">Name is required.</small>
-      </div>
-
-      <div class="field">
-        <label for="description">Descripcion</label>
-        <Textarea id="description" v-model="producto.descripcion" required="true" rows="2" cols="20" />
       </div>
 
       <div class="field">
@@ -104,8 +99,13 @@
           </template>
         </FileUpload> -->
         <input type="file" @change="onImgSelected" />
-
       </div>
+
+      <div class="field">
+        <label for="description">Descripcion</label>
+        <Textarea id="description" v-model="producto.descripcion" required="true" rows="2" cols="20" />
+      </div>
+
 
       <div class="field">
         <label class="mb-3">Estado</label>
@@ -167,6 +167,7 @@
       </template>
       {{ producto }}
     </Dialog>
+
   </div>
 </template>
 
@@ -180,7 +181,9 @@ export default {
   data() {
     return {
       productos: null,
-      producto: {},
+      producto: {
+        imagen: ''
+      },
       selectedProducts: null,
       filters: {},
       submitted: false,
@@ -276,11 +279,10 @@ export default {
         this.producto = {};
       }
     },
-    onImgSelected(event) {
-      console.log(event.target.files)
-      this.producto.imagen = event.target.files[0]
+    onImgSelected(e) {
+      console.log(e.target.files[0])
+      this.producto.imagen = e.target.files[0]
     }
-
   }
 }
 </script>
