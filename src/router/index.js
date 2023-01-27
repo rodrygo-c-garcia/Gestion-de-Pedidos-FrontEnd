@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AppLayout from "@/layout/AppLayout.vue";
+import Buffer from "buffer";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +9,8 @@ const router = createRouter({
     {
       path: "/",
       component: AppLayout,
+      meta: { requireAuth: true },
+
       children: [
         {
           path: "/",
@@ -22,15 +25,9 @@ const router = createRouter({
           component: () => import("../views/AboutView.vue"),
         },
         {
-          path: "/login",
-          name: "login",
-          component: () => import("../views/auth/Login.vue"),
-        },
-        {
           path: "/categorias",
           name: "categorias",
           component: () => import("../views/admin/categoria/Categorias.vue"),
-          meta: { requireAuth: true },
         },
         {
           path: "/categoria/nuevo",
@@ -42,7 +39,6 @@ const router = createRouter({
           path: "/producto",
           name: "producto",
           component: () => import("../views/admin/producto/Producto.vue"),
-          meta: { requireAuth: true },
         },
         {
           path: "/pedido",
@@ -55,6 +51,11 @@ const router = createRouter({
           component: () => import("../views/admin/pedido/NuevoPedido.vue"),
         },
       ],
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/auth/Login.vue"),
     },
   ],
 });
@@ -69,9 +70,16 @@ router.beforeEach((to, from, next) => {
   // si mi ruta esta protegido
   if (to.meta.requireAuth) {
     // autenticamos
-    let tonken64 = localStorage.getItem("token");
-    l;
-    console.log(token);
+    try {
+      let tonken64 = localStorage.getItem("token");
+      let token = Buffer.from(tonken64, "base64").toString("ascii");
+      console.log("TOKEN" + token);
+      // si existe el token dejamos pasar, si no existe mandamos al Login
+      token ? next() : next({ name: "login" });
+    } catch (e) {
+      localStorage.removeItem("token");
+      next({ name: "login" });
+    }
   }
   next();
 });
