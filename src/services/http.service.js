@@ -4,15 +4,21 @@ import { url_base } from "@/config/index.html";
 
 // formamos el axios para que se conecte a la API
 export function http() {
+  let tonken64 = localStorage.getItem("token");
+  let token = Buffer.from(tonken64, "base64").toString("ascii");
+
   // configuracion global de nuestra endpoint
   const interceptor = axios.create({
     baseURL: url_base,
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer 21|2Payqfpo1DOovfdAo1deAnoA4CqkkHPTuMKO0HZS",
+      Authorization: "Bearer" + token,
     },
   });
+
+  // verificar errores ()
+  return interceptor;
 }
 
 // Para archivos
