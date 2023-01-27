@@ -16,6 +16,7 @@ const logoUrl = computed(() => {
 
 <script>
 import * as loginService from "@/services/login.service";
+import CryptoJS from 'crypto-js';
 
 export default {
   data() {
@@ -38,7 +39,9 @@ export default {
       else {
         // vamos a codificar con una cadena de caracteres en base64 y para eso utlizamos la funcion de btoa()
         // para ocultarlo un poco
-        localStorage.setItem("token", btoa(data.access_token));
+        //localStorage.setItem("token", btoa(data.access_token));
+        let base64 = Buffer.from(data.access_token).toString('base64');
+        localStorage.setItem("token", base64);
         this.$router.push({ name: '/' })
       }
     },

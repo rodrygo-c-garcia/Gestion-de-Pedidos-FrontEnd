@@ -30,6 +30,7 @@ const router = createRouter({
           path: "/categorias",
           name: "categorias",
           component: () => import("../views/admin/categoria/Categorias.vue"),
+          meta: { requireAuth: true },
         },
         {
           path: "/categoria/nuevo",
@@ -41,6 +42,7 @@ const router = createRouter({
           path: "/producto",
           name: "producto",
           component: () => import("../views/admin/producto/Producto.vue"),
+          meta: { requireAuth: true },
         },
         {
           path: "/pedido",
@@ -55,6 +57,23 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+// middleware
+// beforeEach antes de entrar a la ruta
+// a, donde, siguiente
+router.beforeEach((to, from, next) => {
+  console.log("FROM", from);
+  console.log("TO", to);
+
+  // si mi ruta esta protegido
+  if (to.meta.requireAuth) {
+    // autenticamos
+    let tonken64 = localStorage.getItem("token");
+    l;
+    console.log(token);
+  }
+  next();
 });
 
 export default router;
