@@ -67,9 +67,13 @@ const isOutsideClicked = (event) => {
             <span>SAKAI</span>
         </router-link>
 
+
+
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
             <i class="pi pi-bars"></i>
         </button>
+
+        <h3>{{ $store.getters.getMensaje }}</h3>
 
         <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
             <i class="pi pi-ellipsis-v"></i>
@@ -92,4 +96,6 @@ const isOutsideClicked = (event) => {
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>
