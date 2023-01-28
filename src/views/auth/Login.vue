@@ -34,15 +34,15 @@ export default {
     async login() {
       // solo capturamos la data (erro, mensaje)
       const { data } = await loginService.login(this.usuario);
-      console.log(data);
-      if (data.error) alert("Datos erroneos");
+
+      if (data.error) this.$toast.add({ severity: 'error', summary: 'Datos erroneos', detail: 'Intente de nuevo', life: 3000 });
       else {
         // vamos a codificar con una cadena de caracteres en base64 y para eso utlizamos la funcion de btoa()
         // para ocultarlo un poco
-        //localStorage.setItem("token", btoa(data.access_token));
-        let base64 = Buffer.from(data.access_token).toString('base64');
-        localStorage.setItem("token", base64);
-        this.$router.push({ path: '/' })
+        localStorage.setItem("token", window.btoa(data.access_token));
+        //let base64 = Buffer.from(data.access_token).toString('base64');
+        //localStorage.setItem("token", base64);
+        this.$router.push({ name: 'home' })
       }
     },
   },
@@ -50,6 +50,8 @@ export default {
 </script>
 
 <template>
+  <Toast position="top-right" />
+
   <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="flex flex-column align-items-center justify-content-center">
       <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
