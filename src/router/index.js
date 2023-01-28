@@ -11,51 +11,44 @@ const router = createRouter({
       path: "/",
       component: AppLayout,
       // añadimos requireAuth al padre ruta por lo que sus hijos tendran las misma caracteristica
-
+      meta: { requireAuth: true },
       // rutas hijas
       children: [
         {
           path: "/",
+          name: "home",
           component: HomeView,
         },
         {
           path: "/about",
           name: "about",
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import("../views/AboutView.vue"),
         },
         {
           path: "/categorias",
           name: "categorias",
           component: () => import("../views/admin/categoria/Categorias.vue"),
-          meta: { requireAuth: true },
         },
         {
           path: "/categoria/nuevo",
           name: "categoria_nueva",
           component: () =>
             import("../views/admin/categoria/CategoriaNueva.vue"),
-          meta: { requireAuth: true },
         },
         {
           path: "/producto",
           name: "producto",
           component: () => import("../views/admin/producto/Producto.vue"),
-          meta: { requireAuth: true },
         },
         {
           path: "/pedido",
           name: "pedido",
           component: () => import("../views/admin/pedido/Pedido.vue"),
-          meta: { requireAuth: true },
         },
         {
           path: "/pedido/nuevo",
           name: "pedido_nuevo",
           component: () => import("../views/admin/pedido/NuevoPedido.vue"),
-          meta: { requireAuth: true },
         },
       ],
     },
@@ -79,8 +72,10 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
     // autenticamos
     try {
-      let tonken64 = localStorage.getItem("token");
-      let token = Buffer.from(tonken64, "base64").toString("ascii");
+      // desencriptar
+      let token = window.atob(localStorage.getItem("token"));
+      console.log("TOKEN " + token);
+      //let token = Buffer.from(tonken64, "base64").toString("ascii");
       // si existe el token dejamos pasar, si no existe mandamos al Login
       token ? next() : next({ name: "login" });
     } catch (e) {
