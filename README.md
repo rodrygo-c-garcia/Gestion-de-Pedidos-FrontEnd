@@ -1,6 +1,6 @@
 # vue-frontend-pedidos
 
-Ariel Rodrigo Colque Garcia
+Proyecto frontend  de Pedidos.
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -14,7 +14,7 @@ This template should help get you started developing with Vue 3 in Vite.
   * Prime Vue
   * Vuex
   * Plantilla Saika
-
+  
 ## Pasos para configurar el proyecto
 
 ```sh
