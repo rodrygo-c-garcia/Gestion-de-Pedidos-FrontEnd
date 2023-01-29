@@ -1,6 +1,7 @@
 # vue-frontend-pedidos
 
 Proyecto frontend  de Pedidos.
+Consumo de API, proyecto con Laravel
 
 This template should help get you started developing with Vue 3 in Vite.
 
