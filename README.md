@@ -1,4 +1,4 @@
-# vue-frontend-pedidos
+# vue-frontend-pedidos (En Proceso)
 
 Proyecto frontend  de Pedidos de Producto.
 Consumo de API, proyecto con Laravel
