@@ -3,8 +3,6 @@
 Proyecto frontend  de Pedidos de Producto.
 Consumo de API, proyecto con Laravel
 
-This template should help get you started developing with Vue 3 in Vite.
-
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
@@ -15,6 +13,7 @@ This template should help get you started developing with Vue 3 in Vite.
   * Prime Vue
   * Vuex
   * Plantilla Saika
+  * Vite 3
   
 ## Pasos para configurar el proyecto
 
