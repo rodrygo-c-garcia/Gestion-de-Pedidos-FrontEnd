@@ -9,7 +9,7 @@ Consumo de API, proyecto con Laravel
 * Tecnologias
   * Prime Vue
   * Vuex
-  * Plantilla Saika
+  * Plantilla Sakai Vue
   * Vite 3
   
 ## Pasos para configurar el proyecto
