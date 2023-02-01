@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h1>Nuevo Pedido</h1>
+    <h1>Pedido</h1>
 
     <Button label="+" class="success" @click="incrementCounter" />
     <h2>{{ counter }}</h2>
