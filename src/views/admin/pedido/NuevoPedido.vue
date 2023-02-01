@@ -28,7 +28,14 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import * as productoService from '@/services/producto.service'
+
+onMounted(() => {
+  productoService.value.getProductsSmall().then(data => products.value = data);
+  productoService.getProductos()
+  // Clase 23 - 54:09
+})
 
 </script>
 
