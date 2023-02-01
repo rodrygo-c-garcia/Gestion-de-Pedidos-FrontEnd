@@ -22,21 +22,9 @@
   </div>
 </template>
 
-<script >
-export default {
-  data() {
-    return {
-      msg: ''
-    }
-  },
-  methods: {
-    dispatchMsj() {
-      // el dispatch rescibe como argumento una funcion 'cambiarMsj' que seria nuestra accion en vuex
-      this.$store.dispatch('cambiarMsj', this.msg)
-    }
-  }
+<script setup>
+import { ref, reactive } from 'vue'
 
-}
 </script>
 
 <style>
