@@ -1,15 +1,28 @@
 <template>
-  <div class="card">
-    <h1>Nuevo Pedido</h1>
-    <h2> {{ $store.state.mensaje }}</h2>
-    <h3>Get - {{ $store.getters.getMensaje }}</h3>
 
-    <input type="text" v-model="msg">
-    <button @click="dispatchMsj">Cambiar MSJ</button>
+  <div class="grid">
+    <!-- col-12 pantallas movil
+    md:col-12 pantallas pc
+    -->
+    <div class="col-12 md:col-12 lg:col-12">
+      <div class="card">
+        <h1>Datos Pedido</h1>
+      </div>
+    </div>
+    <div class="col-12 md:col-8 lg:col-7">
+      <div class="card">
+        <h2>Lista Prductos</h2>
+      </div>
+    </div>
+    <div class="col-12 md:col-4 lg:col-5">
+      <div class="card">
+        <h2>Carrito</h2>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
+<script >
 export default {
   data() {
     return {
