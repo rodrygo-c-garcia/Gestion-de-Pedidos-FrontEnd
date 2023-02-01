@@ -31,12 +31,13 @@
 import { ref, reactive, onMounted } from 'vue'
 import * as productoService from '@/services/producto.service'
 
-onMounted(() => {
+onMounted(async () => {
   productoService.value.getProductsSmall().then(data => products.value = data);
-  productoService.getProductos()
+  productos.value = await productoService.getProductos(1, 5)
   // Clase 23 - 54:09
 })
 
+const productos = ref(null)
 </script>
 
 <style>
