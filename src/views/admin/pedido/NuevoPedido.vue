@@ -38,15 +38,15 @@
           <Column field="sub_total" header="SubTotal"></Column>
           <Column field="" header="Acciones">
             <template #body="slotProps">
-              <Button icon="pi pi-arrow-circle-up" class="p-button-text p-button-success"
+              <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
                 @click="addCarrito(slotProps.data)" />
-              <Button icon="pi pi-arrow-circle-down" class="p-button-text p-button-success"
+              <Button icon="pi pi-arrow-circle-down" class="p-button p-button-text p-button-success"
                 @click="deleteCarrito(slotProps.data)" />
-              <Button icon="pi pi-trash" class="p-button-text p-button-success" @click="hideDialog" />
-
+              <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
             </template>
           </Column>
           <template #footer>
+            Total: {{ total_carrito }}
           </template>
         </DataTable>
       </div>
