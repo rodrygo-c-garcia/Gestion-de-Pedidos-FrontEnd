@@ -20,7 +20,8 @@
           <Column field="categoria.nombre" header="Categoria"></Column>
           <Column :exportable="false" style="min-width:8rem">
             <template #body="">
-              <Button label="Guardar" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
+              <Button icon="pi pi-cart-plus" class="p-button-rounded p-button-warning"
+                @click="confirmDeleteProduct(slotProps.data)" />
             </template>
           </Column>
         </DataTable>
