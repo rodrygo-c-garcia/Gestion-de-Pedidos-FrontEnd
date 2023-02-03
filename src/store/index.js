@@ -6,6 +6,8 @@ export const usePiniaStore = defineStore("store", {
     return {
       count: 0,
       titulo: "Cambio de estado con PINIA",
+      // capturamos el usuario desde localStorge convertimos a JSON
+      user: JSON.parse(localStorage.getItem("user")) || null,
     };
   },
   // could also be defined as
@@ -19,6 +21,11 @@ export const usePiniaStore = defineStore("store", {
     },
     changeMSJ(msg) {
       this.titulo = msg;
+    },
+
+    // cambiamos los estados de usuario
+    changeUser(user_new) {
+      this.user = user_new;
     },
   },
   getters: {
