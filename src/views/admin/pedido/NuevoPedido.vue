@@ -51,7 +51,11 @@
         </DataTable>
       </div>
     </div>
-
+    <div class="col-12 md:col-4 lg:col-4">
+      <div class="card">
+        <h4>Cliente</h4>
+      </div>
+    </div>
   </div>
 </template>
 
