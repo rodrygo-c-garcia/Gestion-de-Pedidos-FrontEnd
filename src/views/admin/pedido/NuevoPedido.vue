@@ -19,9 +19,9 @@
           <Column field="precio" header="Precio"></Column>
           <Column field="categoria.nombre" header="Categoria"></Column>
           <Column :exportable="false" style="min-width:8rem">
-            <template #body="">
-              <Button icon="pi pi-cart-plus" class="p-button-rounded p-button-warning"
-                @click="confirmDeleteProduct(slotProps.data)" />
+            <template #body="slotProps">
+              <Button icon="pi pi-cart-plus" class="p-button-rounded p-button-success"
+                @click="addCarrito(slotProps.data)" />
             </template>
           </Column>
         </DataTable>
@@ -30,6 +30,14 @@
     <div class="col-12 md:col-4 lg:col-5">
       <div class="card">
         <h2>Carrito</h2>
+        <DataTable :value="carrito" responsiveLayout="scroll">
+          <Column field="nombre" header="Nombre"></Column>
+          <Column field="cantidad" header="Cantidad"></Column>
+          <Column field="precio" header="Precio"></Column>
+          <template #footer>
+            Total
+          </template>
+        </DataTable>
       </div>
     </div>
   </div>
@@ -39,15 +47,24 @@
 import { ref, reactive, onMounted } from 'vue'
 import * as productoService from '@/services/producto.service'
 
+const productos = ref(null)
+const carrito = ref([])
+
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
   const { data } = await productoService.getProductos(1, 5)
   productos.value = data.data
 })
 
-
-
-const productos = ref(null)
+// Funciones
+function addCarrito(producto) {
+  let prod = {
+    nombre: producto.nombre,
+    precio: producto.precio,
+    cantidad: 1
+  }
+  carrito.value.push(prod)
+}
 </script>
 
 <style>
