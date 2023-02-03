@@ -9,7 +9,7 @@
         <h1>Datos Pedido</h1>
       </div>
     </div>
-    <div class="col-12 md:col-8 lg:col-7">
+    <div class="col-12 md:col-12 lg:col-12">
       <div class="card">
         <h4>Lista de productos</h4>
         <DataTable :value="productos" responsiveLayout="scroll">
@@ -27,20 +27,31 @@
         </DataTable>
       </div>
     </div>
-    <div class="col-12 md:col-4 lg:col-5">
+    <div class="col-12 md:col-8 lg:col-8">
       <div class="card">
-        <h2>Carrito</h2>
+        <h4>Carrito</h4>
         <DataTable :value="carrito" responsiveLayout="scroll">
           <Column field="nombre" header="Nombre"></Column>
-          <Column field="cantidad" header="Cantidad"></Column>
+          <Column field="cantidad" header="Cantidad">
+          </Column>
           <Column field="precio" header="Precio"></Column>
           <Column field="sub_total" header="SubTotal"></Column>
+          <Column field="" header="Acciones">
+            <template #body="slotProps">
+              <Button icon="pi pi-arrow-circle-up" class="p-button-text p-button-success"
+                @click="addCarrito(slotProps.data)" />
+              <Button icon="pi pi-arrow-circle-down" class="p-button-text p-button-success"
+                @click="deleteCarrito(slotProps.data)" />
+              <Button icon="pi pi-trash" class="p-button-text p-button-success" @click="hideDialog" />
+
+            </template>
+          </Column>
           <template #footer>
-            Total: {{ total_carrito }}
           </template>
         </DataTable>
       </div>
     </div>
+
   </div>
 </template>
 
