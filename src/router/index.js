@@ -74,10 +74,11 @@ router.beforeEach((to, from, next) => {
     try {
       // desencriptar
       let token = window.atob(localStorage.getItem("token"));
-      console.log("TOKEN " + token);
+      //console.log("TOKEN " + token.length);
+
       //let token = Buffer.from(tonken64, "base64").toString("ascii");
       // si existe el token dejamos pasar, si no existe mandamos al Login
-      token ? next() : next({ name: "login" });
+      token.length > 3 ? next() : next({ name: "login" });
     } catch (e) {
       localStorage.removeItem("token");
       next({ name: "login" });
