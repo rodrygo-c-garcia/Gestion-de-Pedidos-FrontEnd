@@ -6,7 +6,8 @@
     -->
     <div class="col-12 md:col-12 lg:col-12">
       <div class="card">
-        <h1>Datos Pedido</h1>
+        <h5>Usuario: {{ pinia.user.email }}</h5>
+        <h5>Codigo: {{ pinia.user.id }}</h5>
       </div>
     </div>
     <div class="col-12 md:col-12 lg:col-12">
@@ -62,6 +63,10 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import * as productoService from '@/services/producto.service'
+// PINIA
+import { usePiniaStore } from '@/store/index.js'
+const pinia = usePiniaStore()
+
 
 const productos = ref(null)
 const carrito = ref([])
