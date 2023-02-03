@@ -29,6 +29,8 @@ export function http() {
     (error) => {
       //limipiamos el localStorage
       localStorage.clear();
+      // Redireccionamos al login en caso de errores de no autenticacion
+      window.location.href = "/login";
       // redireccionamos al login cuando hay un error
       return Promise.reject(error);
       //router.push("/login");
