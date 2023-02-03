@@ -73,7 +73,6 @@ const isOutsideClicked = (event) => {
             <i class="pi pi-bars"></i>
         </button>
 
-        <h3>{{ $store.getters.getMensaje }}</h3>
 
         <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
             <i class="pi pi-ellipsis-v"></i>
