@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import PrimeVue from "primevue/config";
-import store from "./store/index.js";
+import { createPinia } from "pinia";
 
 import "@/assets/styles.scss";
 import AutoComplete from "primevue/autocomplete";
@@ -104,13 +104,14 @@ import VirtualScroller from "primevue/virtualscroller";
 
 import Popper from "vue3-popper";
 
+const pinia = createPinia();
 const app = createApp(App);
 
 app.use(PrimeVue);
 app.use(router);
 app.use(ToastService);
 app.use(ConfirmationService);
-app.use(store);
+app.use(pinia);
 
 app.component("Popper", Popper);
 app.component("Accordion", Accordion);
