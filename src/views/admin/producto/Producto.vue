@@ -165,7 +165,6 @@
         <Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="hideDialog" />
         <Button label="Guardar" icon="pi pi-check" class="p-button-text" @click="saveProduct" />
       </template>
-      {{ producto }}
     </Dialog>
 
   </div>
