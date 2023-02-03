@@ -34,12 +34,14 @@ export default {
     async login() {
       // solo capturamos la data (erro, mensaje)
       const { data } = await loginService.login(this.usuario);
-
+      console.log(data)
       if (data.error) this.$toast.add({ severity: 'error', summary: 'Datos erroneos', detail: 'Intente de nuevo', life: 3000 });
       else {
         // vamos a codificar con una cadena de caracteres en base64 y para eso utlizamos la funcion de btoa()
         // para ocultarlo un poco
         localStorage.setItem("token", window.btoa(data.access_token));
+        // Para almacenar el usuario el Almacenamiento local, la data user convertimos a string
+        localStorage.setItem('user', JSON.stringify(data.user))
         //let base64 = Buffer.from(data.access_token).toString('base64');
         //localStorage.setItem("token", base64);
         this.$router.push({ name: 'home' })
