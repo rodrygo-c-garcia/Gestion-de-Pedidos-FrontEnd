@@ -34,8 +34,9 @@
           <Column field="nombre" header="Nombre"></Column>
           <Column field="cantidad" header="Cantidad"></Column>
           <Column field="precio" header="Precio"></Column>
+          <Column field="sub_total" header="SubTotal"></Column>
           <template #footer>
-            Total
+            Total: {{ total_carrito }}
           </template>
         </DataTable>
       </div>
@@ -49,6 +50,7 @@ import * as productoService from '@/services/producto.service'
 
 const productos = ref(null)
 const carrito = ref([])
+const total_carrito = ref(0.0)
 
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
@@ -61,8 +63,12 @@ function addCarrito(producto) {
   let prod = {
     nombre: producto.nombre,
     precio: producto.precio,
-    cantidad: 1
+    cantidad: 1,
   }
+  // Agregamos la culumna de subtotal
+  prod['sub_total'] = parseFloat(prod.precio * prod.cantidad)
+
+  total_carrito.value += parseFloat(prod.precio)
   carrito.value.push(prod)
 }
 </script>
