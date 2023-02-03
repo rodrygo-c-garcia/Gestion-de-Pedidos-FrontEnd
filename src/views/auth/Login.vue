@@ -3,6 +3,8 @@ import { useLayout } from '@/layout/composables/layout';
 import { ref, computed } from 'vue';
 import AppConfig from '@/layout/AppConfig.vue';
 
+
+
 const { layoutConfig, contextPath } = useLayout();
 const email = ref('');
 const password = ref('');
@@ -17,6 +19,10 @@ const logoUrl = computed(() => {
 <script>
 import * as loginService from "@/services/login.service";
 import { Buffer } from 'buffer';
+// PINIA
+import { usePiniaStore } from '@/store/index.js'
+const pinia = usePiniaStore()
+
 
 export default {
   data() {
@@ -32,11 +38,14 @@ export default {
   methods: {
     // realizamos la peticion a nuestra API
     async login() {
+
       // solo capturamos la data (erro, mensaje)
       const { data } = await loginService.login(this.usuario);
       console.log(data)
       if (data.error) this.$toast.add({ severity: 'error', summary: 'Datos erroneos', detail: 'Intente de nuevo', life: 3000 });
       else {
+        const pinia = usePiniaStore()
+
         // vamos a codificar con una cadena de caracteres en base64 y para eso utlizamos la funcion de btoa()
         // para ocultarlo un poco
         localStorage.setItem("token", window.btoa(data.access_token));
@@ -44,6 +53,9 @@ export default {
         localStorage.setItem('user', JSON.stringify(data.user))
         //let base64 = Buffer.from(data.access_token).toString('base64');
         //localStorage.setItem("token", base64);
+
+        // actulizamos el usuario con PINIA
+        pinia.changeUser(data.user)
         this.$router.push({ name: 'home' })
       }
     },
@@ -62,7 +74,7 @@ export default {
         <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
           <div class="text-center mb-5">
             <img src="/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3" />
-            <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
+            <div class="text-900 text-3xl font-medium mb-3">Welcome, <span>{{ pinia.user.name }}</span></div>
             <span class="text-600 font-medium">Sign in to continue</span>
           </div>
 
