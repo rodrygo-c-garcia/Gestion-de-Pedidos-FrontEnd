@@ -3,6 +3,10 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
 
+// PINIA
+import { usePiniaStore } from '@/store/index.js'
+const pinia = usePiniaStore()
+
 const { layoutConfig, onMenuToggle, contextPath } = useLayout();
 
 const outsideClickListener = ref(null);
@@ -68,15 +72,17 @@ const isOutsideClicked = (event) => {
         </router-link>
 
 
-
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
             <i class="pi pi-bars"></i>
         </button>
 
-
+        <h5></h5>
         <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
             <i class="pi pi-ellipsis-v"></i>
         </button>
+
+        <!-- Datos del usuario -->
+        <h5>{{ pinia.user.name }}</h5>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
