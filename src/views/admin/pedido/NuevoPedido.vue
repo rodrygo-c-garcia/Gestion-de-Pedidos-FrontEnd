@@ -177,7 +177,9 @@ const closeBasic = () => {
   displayBasic.value = false;
 };
 
-
+async function saveCliente() {
+  await apiCliente.postCliente(cliente.value)
+}
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
 // })
