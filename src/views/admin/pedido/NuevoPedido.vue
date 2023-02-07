@@ -58,7 +58,7 @@
         <div class="field col-5">
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
-            <InputText type="text" v-model="identificacion" placeholder="Buscar cliente" />
+            <InputText type="text" v-model="identificacion" placeholder="Buscar NIT del cliente" @change="getCliente" />
           </span>
         </div>
         <!-- <div>Cliente: {{ buscarCliente }}</div> -->
@@ -94,14 +94,14 @@ const pinia = usePiniaStore()
 const productos = ref(null)
 const carrito = ref([])
 const total_carrito = ref(0.0),
-  identificacion = ref(0),
+  identificacion = ref(''),
   lista_clientes = ref([])
 
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
   const { data } = await productoService.getProductos(1, 5)
   productos.value = data.data
-  getCliente()
+  getCliente
 })
 
 // Funciones
@@ -118,11 +118,11 @@ function addCarrito(producto) {
   carrito.value.push(prod)
 };
 
-async function getCliente() {
+const getCliente = computed(async () => {
   const { data } = await apiCliente.getClientes(identificacion.value)
   console.log(data)
   lista_clientes.value = data
-}
+})
 
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
