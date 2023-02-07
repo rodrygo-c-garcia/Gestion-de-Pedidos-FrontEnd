@@ -60,6 +60,46 @@
             <i class="pi pi-search" />
             <InputText type="text" v-model="identificacion" placeholder="Buscar NIT del cliente" @change="getCliente" />
           </span>
+          <span>
+            <Button label="Nuevo Cliente" icon="pi pi-external-link" @click="openBasic" />
+          </span>
+          <Dialog v-model:visible="displayBasic" :style="{ width: '450px' }" header="Registrar nuevo cliente"
+            :modal="true" class="p-fluid">
+            <div class="grid p-fluid">
+              <div class="col-12 md:col-12">
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon">
+                    <i class="pi pi-user"></i>
+                  </span>
+                  <InputText placeholder="Nombre Completo" v-model="cliente.nombreCompleto" />
+                </div>
+              </div>
+
+              <div class="col-12 md:col-12">
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
+                  <InputText placeholder="CI / NIT" v-model="cliente.ci_nit" />
+                </div>
+              </div>
+              <div class="col-12 md:col-12">
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon">#</span>
+                  <InputNumber placeholder="Telefono" v-model="cliente.telefono" />
+                </div>
+              </div>
+              <div class="col-12 md:col-12">
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
+                  <InputText type="email" placeholder="Correo" v-model="cliente.correo" />
+
+                </div>
+              </div>
+            </div>
+            <template #footer>
+              <Button label="Cancelar" icon="pi pi-times" class="p-button-text" @click="closeBasic" />
+              <Button label="Guardar" icon="pi pi-check" class="p-button-text" @click="saveCliente" />
+            </template>
+          </Dialog>
         </div>
         <!-- <div>Cliente: {{ buscarCliente }}</div> -->
         <!-- <div>{{ lista_clientes }}</div> -->
@@ -70,12 +110,14 @@
             <template #body="slotProps">
               <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
                 @click="addCarrito(slotProps.data)" />
-              <Button icon="pi pi-arrow-circle-down" class="p-button p-button-text p-button-success"
-                @click="deleteCarrito(slotProps.data)" />
               <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
             </template>
           </Column>
         </DataTable>
+      </div>
+
+      <div class="card">
+        <Button>Realizar Pedido</Button>
       </div>
     </div>
   </div>
@@ -95,7 +137,10 @@ const productos = ref(null)
 const carrito = ref([])
 const total_carrito = ref(0.0),
   identificacion = ref(''),
-  lista_clientes = ref([])
+  lista_clientes = ref([]),
+  cliente = ref({})
+
+const displayBasic = ref(false);
 
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
@@ -123,6 +168,15 @@ const getCliente = computed(async () => {
   console.log(data)
   lista_clientes.value = data
 })
+
+const openBasic = () => {
+  displayBasic.value = true;
+};
+
+const closeBasic = () => {
+  displayBasic.value = false;
+};
+
 
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
