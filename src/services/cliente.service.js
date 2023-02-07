@@ -1,7 +1,7 @@
 import { http, httpFile } from "./http.service";
 
-export const getClientes = function () {
-  return http().get(`/cliente`);
+export const getClientes = function (id_ci_nit) {
+  return http().get(`/cliente?search=${id_ci_nit}`);
 };
 
 export const postCliente = function (data) {
