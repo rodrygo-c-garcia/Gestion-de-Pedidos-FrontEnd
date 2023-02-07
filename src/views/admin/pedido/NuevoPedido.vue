@@ -1,4 +1,5 @@
 <template>
+  <Toast position="top-right" />
 
   <div class="grid">
     <!-- col-12 pantallas movil
@@ -84,7 +85,7 @@
               <div class="col-12 md:col-12">
                 <div class="p-inputgroup">
                   <span class="p-inputgroup-addon">#</span>
-                  <InputNumber placeholder="Telefono" v-model="cliente.telefono" />
+                  <InputText placeholder="Telefono" v-model="cliente.telefono" />
                 </div>
               </div>
               <div class="col-12 md:col-12">
@@ -109,7 +110,7 @@
           <Column field="" header="Acciones">
             <template #body="slotProps">
               <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
-                @click="addCarrito(slotProps.data)" />
+                @click="selectClient(slotProps.data)" />
               <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
             </template>
           </Column>
@@ -117,6 +118,9 @@
       </div>
 
       <div class="card">
+        <h3>Datos del Cliente</h3>
+        <h6>Nombre: {{ cliente_data.nombreCompleto }}</h6>
+        <h6>CI / NIt: {{ cliente_data.ci_nit }}</h6>
         <Button>Realizar Pedido</Button>
       </div>
     </div>
@@ -138,7 +142,8 @@ const carrito = ref([])
 const total_carrito = ref(0.0),
   identificacion = ref(''),
   lista_clientes = ref([]),
-  cliente = ref({})
+  cliente = ref({}),
+  cliente_data = ref({})
 
 const displayBasic = ref(false);
 
@@ -174,11 +179,27 @@ const openBasic = () => {
 };
 
 const closeBasic = () => {
+  cliente = {}
   displayBasic.value = false;
 };
 
 async function saveCliente() {
-  await apiCliente.postCliente(cliente.value)
+  try {
+    const { data } = await apiCliente.postCliente(cliente.value)
+    console.log(data)
+    closeBasic()
+    this.$toast.add({ severity: 'success', summary: 'Cliente Registrado', detail: 'Revise la lista', life: 3000 });
+
+  } catch (error) {
+    console.log(error)
+    closeBasic()
+    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'No se Registro el Cliente', life: 3000 });
+  }
+
+}
+
+function selectClient(cliente_seleccionado) {
+  cliente_data.value = cliente_seleccionado
 }
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
