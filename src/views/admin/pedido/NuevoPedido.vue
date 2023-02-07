@@ -28,12 +28,12 @@
         </DataTable>
       </div>
     </div>
-    <div class="col-12 md:col-8 lg:col-8">
+    <div class="col-12 md:col-8 lg:col-7">
       <div class="card">
         <h4>Carrito</h4>
         <DataTable :value="carrito" responsiveLayout="scroll">
           <Column field="nombre" header="Nombre"></Column>
-          <Column field="cantidad" header="Cantidad">
+          <Column field="cantidad" header="Cant.">
           </Column>
           <Column field="precio" header="Precio"></Column>
           <Column field="sub_total" header="SubTotal"></Column>
@@ -52,17 +52,40 @@
         </DataTable>
       </div>
     </div>
-    <div class="col-12 md:col-4 lg:col-4">
+    <div class="col-12 md:col-4 lg:col-5">
       <div class="card">
         <h4>Cliente</h4>
+        <div class="field col-5">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search" />
+            <InputText type="text" v-model="identificacion" placeholder="Buscar cliente" />
+          </span>
+        </div>
+        <!-- <div>Cliente: {{ buscarCliente }}</div> -->
+        <!-- <div>{{ lista_clientes }}</div> -->
+        <DataTable :value="lista_clientes" responsiveLayout="scroll">
+          <Column field="nombreCompleto" header="Nombre"></Column>
+          <Column field="ci_nit" header="NIT"></Column>
+          <Column field="" header="Acciones">
+            <template #body="slotProps">
+              <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
+                @click="addCarrito(slotProps.data)" />
+              <Button icon="pi pi-arrow-circle-down" class="p-button p-button-text p-button-success"
+                @click="deleteCarrito(slotProps.data)" />
+              <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
+            </template>
+          </Column>
+        </DataTable>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import * as productoService from '@/services/producto.service'
+import * as apiCliente from '@/services/cliente.service';
+
 // PINIA
 import { usePiniaStore } from '@/store/index.js'
 const pinia = usePiniaStore()
@@ -70,12 +93,15 @@ const pinia = usePiniaStore()
 
 const productos = ref(null)
 const carrito = ref([])
-const total_carrito = ref(0.0)
+const total_carrito = ref(0.0),
+  identificacion = ref(0),
+  lista_clientes = ref([])
 
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
   const { data } = await productoService.getProductos(1, 5)
   productos.value = data.data
+  getCliente()
 })
 
 // Funciones
@@ -90,7 +116,17 @@ function addCarrito(producto) {
 
   total_carrito.value += parseFloat(prod.precio)
   carrito.value.push(prod)
+};
+
+async function getCliente() {
+  const { data } = await apiCliente.getClientes(identificacion.value)
+  console.log(data)
+  lista_clientes.value = data
 }
+
+// const buscarCliente = computed(() => {
+//   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
+// })
 </script>
 
 <style>
