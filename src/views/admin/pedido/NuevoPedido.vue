@@ -59,7 +59,7 @@
         <div class="field col-5">
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
-            <InputText type="text" v-model="identificacion" placeholder="Buscar NIT del cliente" @change="getCliente" />
+            <InputText type="text" v-model="identificacion" placeholder="Buscar NIT del cliente" @keyup="getCliente" />
           </span>
           <span>
             <Button label="Nuevo Cliente" icon="pi pi-external-link" @click="openBasic" />
@@ -121,6 +121,12 @@
         <h3>Datos del Cliente</h3>
         <h6>Nombre: {{ cliente_data.nombreCompleto }}</h6>
         <h6>CI / NIT: {{ cliente_data.ci_nit }}</h6>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <i class="pi pi-user"></i>
+          </span>
+          <InputText placeholder="Codigo Factura" v-model="cod_factura" />
+        </div>
         <Button>Realizar Pedido</Button>
       </div>
     </div>
@@ -149,11 +155,14 @@ const total_carrito = ref(0.0),
 const displayBasic = ref(false);
 const toast = useToast();
 
+const cod_factura = ref(0)
+
+
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
   const { data } = await productoService.getProductos(1, 5)
   productos.value = data.data
-  getCliente
+  getCliente()
 })
 
 // Funciones
@@ -170,10 +179,10 @@ function addCarrito(producto) {
   carrito.value.push(prod)
 };
 
-const getCliente = computed(async () => {
+async function getCliente() {
   const { data } = await apiCliente.getClientes(identificacion.value)
   lista_clientes.value = data
-})
+}
 
 const openBasic = () => {
   displayBasic.value = true;
@@ -188,18 +197,22 @@ async function saveCliente() {
   try {
     const { data } = await apiCliente.postCliente(cliente.value)
     cliente_data.value = data.cliente
+    getCliente()
     closeBasic()
     toast.add({ severity: 'success', summary: 'Cliente Registrado', detail: 'Revise la lista', life: 3000 });
   } catch (error) {
     console.log(error)
     closeBasic()
     toast.add({ severity: 'error', summary: 'Error', detail: 'Cliente NO Registrado', life: 3000 });
-
   }
 }
 
 function selectClient(cliente_seleccionado) {
   cliente_data.value = cliente_seleccionado
+}
+
+async function completarPedido() {
+  cod_factura
 }
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
