@@ -120,7 +120,7 @@
       <div class="card">
         <h3>Datos del Cliente</h3>
         <h6>Nombre: {{ cliente_data.nombreCompleto }}</h6>
-        <h6>CI / NIt: {{ cliente_data.ci_nit }}</h6>
+        <h6>CI / NIT: {{ cliente_data.ci_nit }}</h6>
         <Button>Realizar Pedido</Button>
       </div>
     </div>
@@ -131,6 +131,7 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import * as productoService from '@/services/producto.service'
 import * as apiCliente from '@/services/cliente.service';
+import { useToast } from "primevue/usetoast";
 
 // PINIA
 import { usePiniaStore } from '@/store/index.js'
@@ -146,6 +147,7 @@ const total_carrito = ref(0.0),
   cliente_data = ref({})
 
 const displayBasic = ref(false);
+const toast = useToast();
 
 onMounted(async () => {
   //productoService.value.getProductsSmall().then(data => products.value = data);
@@ -170,7 +172,6 @@ function addCarrito(producto) {
 
 const getCliente = computed(async () => {
   const { data } = await apiCliente.getClientes(identificacion.value)
-  console.log(data)
   lista_clientes.value = data
 })
 
@@ -179,23 +180,22 @@ const openBasic = () => {
 };
 
 const closeBasic = () => {
-  cliente = {}
+  cliente.value = {}
   displayBasic.value = false;
 };
 
 async function saveCliente() {
   try {
     const { data } = await apiCliente.postCliente(cliente.value)
-    console.log(data)
+    cliente_data.value = data.cliente
     closeBasic()
-    this.$toast.add({ severity: 'success', summary: 'Cliente Registrado', detail: 'Revise la lista', life: 3000 });
-
+    toast.add({ severity: 'success', summary: 'Cliente Registrado', detail: 'Revise la lista', life: 3000 });
   } catch (error) {
     console.log(error)
     closeBasic()
-    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'No se Registro el Cliente', life: 3000 });
-  }
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Cliente NO Registrado', life: 3000 });
 
+  }
 }
 
 function selectClient(cliente_seleccionado) {
