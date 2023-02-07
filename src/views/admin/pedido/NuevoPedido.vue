@@ -51,6 +51,7 @@
             Total: {{ total_carrito }}
           </template>
         </DataTable>
+
       </div>
     </div>
     <div class="col-12 md:col-4 lg:col-5">
@@ -127,7 +128,7 @@
           </span>
           <InputText placeholder="Codigo Factura" v-model="cod_factura" />
         </div>
-        <Button>Realizar Pedido</Button>
+        <Button @click="completarPedido">Realizar Pedido</Button>
       </div>
     </div>
   </div>
@@ -168,6 +169,7 @@ onMounted(async () => {
 // Funciones
 function addCarrito(producto) {
   let prod = {
+    id: producto.id,
     nombre: producto.nombre,
     precio: producto.precio,
     cantidad: 1,
@@ -212,7 +214,20 @@ function selectClient(cliente_seleccionado) {
 }
 
 async function completarPedido() {
-  cod_factura
+  const pedido = {
+    cod_factura: cod_factura.value,
+    cliente_id: cliente_data.value.id,
+    productos: []
+  }
+  // agregamos los productos del carrito a nuestro pedido
+  carrito.value.forEach(producto => {
+    pedido.productos.push({
+      producto_id: producto.id,
+      cantidad: producto.cantidad
+    })
+  });
+
+  console.log(pedido)
 }
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
