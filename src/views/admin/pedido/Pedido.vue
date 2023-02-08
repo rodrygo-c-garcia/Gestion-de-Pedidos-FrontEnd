@@ -20,7 +20,17 @@
     </DataTable>
     <Dialog v-model:visible="displayBasic" :style="{ width: '450px' }" header="Registrar nuevo cliente" :modal="true"
       class="p-fluid">
-
+      <DataTable :value="pedido" responsiveLayout="scroll">
+        <Column field="cod_factura" header="Codigo Factura"></Column>
+        <Column field="cliente.nombreCompleto" header="Cliente"></Column>
+        <Column field="" header="Acciones">
+          <template #body="slotProps">
+            <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
+              @click="selectClient(slotProps.data)" />
+            <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
+          </template>
+        </Column>
+      </DataTable>
     </Dialog>
   </div>
 </template>
@@ -42,7 +52,19 @@ onMounted(async () => {
   pedidos.value = data.data
 })
 
+const openBasic = () => {
+  displayBasic.value = true;
+};
 
+const closeBasic = () => {
+  displayBasic.value = false;
+};
+
+async function mostrarPedido(pedido) {
+  openBasic()
+  // const { data } = await apiPedido.getPedido(pedido.id)
+  // pedido.value = data
+}
 
 </script>
 
