@@ -18,19 +18,19 @@
         </template>
       </Column>
     </DataTable>
-    <Dialog v-model:visible="displayBasic" :style="{ width: '450px' }" header="Registrar nuevo cliente" :modal="true"
+    <Dialog v-model:visible="displayBasic" :style="{ width: '450px' }" header="Detalles del Pedido" :modal="true"
       class="p-fluid">
-      <DataTable :value="pedido" responsiveLayout="scroll">
-        <Column field="nombre" header="Nombre"></Column>
-        <Column field="precio" header="Precio"></Column>
-        <Column field="" header="Acciones">
-          <template #body="slotProps">
-            <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
-              @click="selectClient(slotProps.data)" />
-            <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
-          </template>
-        </Column>
-      </DataTable>
+      <Fieldset legend="Datos Cliente" :toggleable="true">
+        <h7>Nombre: {{ pedido.cliente.nombreCompleto }} </h7>
+      </Fieldset>
+      <Fieldset legend="Datos Producto" :toggleable="true">
+        <h7>Producto: {{ pedido.productos }}
+        </h7>
+      </Fieldset>
+      <Fieldset legend="Datos Cajero" :toggleable="true">
+        <h7>Nombre: {{ pedido.user.name }}
+        </h7>
+      </Fieldset>
     </Dialog>
   </div>
 </template>
@@ -62,8 +62,8 @@ const closeBasic = () => {
 
 async function mostrarPedido(ped) {
   const { data } = await apiPedido.getPedido(ped.id)
-  console.log(data.productos)
-  pedido.value = data.productos
+  console.log(data)
+  pedido.value = data
   openBasic()
 }
 
