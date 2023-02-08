@@ -21,8 +21,8 @@
     <Dialog v-model:visible="displayBasic" :style="{ width: '450px' }" header="Registrar nuevo cliente" :modal="true"
       class="p-fluid">
       <DataTable :value="pedido" responsiveLayout="scroll">
-        <Column field="cod_factura" header="Codigo Factura"></Column>
-        <Column field="cliente.nombreCompleto" header="Cliente"></Column>
+        <Column field="nombre" header="Nombre"></Column>
+        <Column field="precio" header="Precio"></Column>
         <Column field="" header="Acciones">
           <template #body="slotProps">
             <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
@@ -60,10 +60,11 @@ const closeBasic = () => {
   displayBasic.value = false;
 };
 
-async function mostrarPedido(pedido) {
+async function mostrarPedido(ped) {
+  const { data } = await apiPedido.getPedido(ped.id)
+  console.log(data.productos)
+  pedido.value = data.productos
   openBasic()
-  // const { data } = await apiPedido.getPedido(pedido.id)
-  // pedido.value = data
 }
 
 </script>
