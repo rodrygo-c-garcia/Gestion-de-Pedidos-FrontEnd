@@ -138,6 +138,7 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import * as productoService from '@/services/producto.service'
 import * as apiCliente from '@/services/cliente.service';
+import * as apiPedido from '@/services/pedido.service';
 import { useToast } from "primevue/usetoast";
 
 // PINIA
@@ -214,20 +215,31 @@ function selectClient(cliente_seleccionado) {
 }
 
 async function completarPedido() {
-  const pedido = {
-    cod_factura: cod_factura.value,
-    cliente_id: cliente_data.value.id,
-    productos: []
-  }
-  // agregamos los productos del carrito a nuestro pedido
-  carrito.value.forEach(producto => {
-    pedido.productos.push({
-      producto_id: producto.id,
-      cantidad: producto.cantidad
-    })
-  });
+  try {
+    const pedido = {
+      cod_factura: cod_factura.value,
+      cliente_id: cliente_data.value.id,
+      productos: []
+    }
+    // agregamos los productos del carrito a nuestro pedido
+    carrito.value.forEach(producto => {
+      pedido.productos.push({
+        producto_id: producto.id,
+        cantidad: producto.cantidad
+      })
+    });
 
-  console.log(pedido)
+    const { data } = await apiPedido.postPedido(pedido)
+    console.log(data)
+    cod_factura.value = 0
+    cliente_data.value = {}
+    carrito.value = {}
+    toast.add({ severity: 'success', summary: 'Pedido Completado', detail: 'Revise la lista de Pedidos', life: 3000 });
+
+  } catch (error) {
+    console.log(error)
+    toast.add({ severity: 'error', summary: 'Error', detail: 'Pedido NO Procesdo', life: 3000 });
+  }
 }
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
