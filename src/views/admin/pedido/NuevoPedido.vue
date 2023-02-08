@@ -41,9 +41,9 @@
           <Column field="" header="Acciones">
             <template #body="slotProps">
               <Button icon="pi pi-arrow-circle-up" class="p-button p-button-text p-button-success"
-                @click="addCarrito(slotProps.data)" />
+                @click="incrementarCantidad(slotProps.data)" />
               <Button icon="pi pi-arrow-circle-down" class="p-button p-button-text p-button-success"
-                @click="deleteCarrito(slotProps.data)" />
+                @click="decrementarCantidad(slotProps.data)" />
               <Button icon="pi pi-trash" class="p-button p-button-text p-button-danger" @click="hideDialog" />
             </template>
           </Column>
@@ -240,6 +240,21 @@ async function completarPedido() {
     console.log(error)
     toast.add({ severity: 'error', summary: 'Error', detail: 'Pedido NO Procesdo', life: 3000 });
   }
+}
+
+function incrementarCantidad(prod) {
+  prod.cantidad++
+  prod['sub_total'] = parseFloat(prod.precio * prod.cantidad)
+  total_carrito.value += parseFloat(prod.precio)
+}
+
+function decrementarCantidad(prod) {
+  if (prod.cantidad > 1) {
+    prod.cantidad--
+    prod['sub_total'] = parseFloat(prod.precio * prod.cantidad)
+    total_carrito.value -= parseFloat(prod.precio)
+  }
+  else toast.add({ severity: 'error', summary: 'Error', detail: 'No se puede vender producto con cantidad 0', life: 3000 });
 }
 // const buscarCliente = computed(() => {
 //   return lista_clientes.value.find(obj => obj.id === parseInt(identificacion.value)) || 'no existe'
