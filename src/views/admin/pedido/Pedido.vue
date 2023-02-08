@@ -24,8 +24,11 @@
         <h7>Nombre: {{ pedido.cliente.nombreCompleto }} </h7>
       </Fieldset>
       <Fieldset legend="Datos Producto" :toggleable="true">
-        <h7>Producto: {{ pedido.productos }}
-        </h7>
+        <DataTable :value="pedido.productos" responsiveLayout="scroll">
+          <Column field="nombre" header="Nombre"></Column>
+          <Column field="pivot.cantidad" header="Cantidad"></Column>
+          <Column field="precio" header="Precio"></Column>
+        </DataTable>
       </Fieldset>
       <Fieldset legend="Datos Cajero" :toggleable="true">
         <h7>Nombre: {{ pedido.user.name }}
